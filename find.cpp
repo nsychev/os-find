@@ -70,6 +70,7 @@ void process_dir(const std::string& path, int fd, const filter_chain& filters) {
                 }
                 
                 process_dir(filepath, childfd, filters);
+                close(childfd);
             } else {
                 process_file(filepath, fd, de, filters);
             }
@@ -99,6 +100,8 @@ int main(int argc, char** argv) {
         }
         
         process_dir(path, fd, filters);
+
+        close(fd);
     } catch (std::exception& e) {
         print_error(e.what());
         return EXIT_FAILURE;

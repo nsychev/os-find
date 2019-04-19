@@ -53,7 +53,8 @@ bool size_filter::apply(const std::string& path, const linux_dirent* de, const s
             return st->st_size == size;
         case modifier::LESS:
             return st->st_size < size;
-        // no default state
+        default:
+            throw std::runtime_error("program got in inconsistent state: size modifier is unknown");
     }
 }
 
